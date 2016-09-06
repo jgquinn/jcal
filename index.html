@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Sample HTML Page</title>
+
+        <!-- sample.js contains the definition of sampleExternalFunction() -->
+        <script type="text/javascript" src="sample.js"></script>
+
+    </head>
+    <body>
+        <!-- nothing to see here -->
+        <script type="text/javascript">
+
+            // To start, you can put code directly into an HTML file, like this.
+            document.write( "Hello, world." );
+            // ( That message will become part of the page content. )
+
+            // You can also organize code into separate files and use it here.
+            var msg = sampleExternalFunction();
+
+            /* Passing that value to console.log() will write it to the browser
+               console; it won't appear on the page itself. */
+            console.log( msg );
+
+        </script>
+    </body>
+</html>
