@@ -1,20 +1,45 @@
+
 <html>
-    <canvas id="gameCanvas" width="800" height="600">
-    </canvas>
-    <script>
+    <head>
+        <title>Pong Canvas</title>
+        <style>
+            body { margin:0px; }
+        </style>
+    </head>
+    <body>
+        <canvas id="gameCanvas" width="800" height="600" ></canvas>
+        <script>
 
-        var canvas;
-        var canvasContext;
+            var canvas;
+            var canvasContext;
 
-        window.onload =
-            function()
+            window.onload =
+                function()
+                {
+                    console.log( "Hi there!" );
+
+                    canvas = document.getElementById( 'gameCanvas' );
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+
+                    canvasContext = canvas.getContext( '2d' );
+                    drawEverything();
+                }
+
+            function drawEverything()
             {
-                console.log( "Hi there!" );
-                canvas = document.getElementById( 'gameCanvas' );
-                canvasContext = canvas.getContext( '2d' );
                 canvasContext.fillStyle = 'black';
                 canvasContext.fillRect( 0, 0, canvas.width, canvas.height );
+                canvasContext.fillStyle = 'red';
+
+                var side = 50;
+
+                canvasContext.fillRect( ( (canvas.width-side)/2 ),
+                                        ( (canvas.height-side)/2 ),
+                                        side,
+                                        side );
             }
 
-    </script>
+        </script>
+    </body>
 </html>
