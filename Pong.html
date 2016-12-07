@@ -10,34 +10,103 @@
         <canvas id="gameCanvas" width="800" height="600" ></canvas>
         <script>
 
+            var bouncedYet = false;
+
             var canvas;
             var canvasContext;
+
+            var ballx = 0;
+            var bally = 0;
+
+            DIR_LEFT = -1;
+            DIR_RIGHT = 1;
+
+            var ballspeedX = 5;
+            var balldirX = DIR_LEFT;
+
+            dashLength = 20;
+            dashGap = 20;
 
             window.onload =
                 function()
                 {
-                    console.log( "Hi there!" );
-
                     canvas = document.getElementById( 'gameCanvas' );
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
+                    ballx = canvas.width/2 - 25;
+                    bally = canvas.height/2 - 25;
+
+                    lineX = canvas.width/2 - 10;
 
                     canvasContext = canvas.getContext( '2d' );
-                    drawEverything();
+
+                    var framesPerSecond = 15;
+                    setInterval(moveBoth, 1000/framesPerSecond);
+                };
+
+            function moveBoth() {
+                moveEverything();
+                drawEverything();
+            }
+            function moveEverything() {
+
+                ballx = ballx + ( ballspeedX * balldirX );
+
+
+                // NOTE: test whether less than 10 or greather than ( width-10 )
+                //       in that case, multiply by -1
+
+                if (ballx < 15)  {
+                    bounceBall( DIR_RIGHT );
                 }
+
+                if (ballx > canvas.width - 40) {
+                    bounceBall( DIR_LEFT );
+                }
+            }
+
+            function bounceBall( dir )
+            {
+                balldirX = dir;
+                bouncedYet = true;
+                if ( ballspeedX < 50 )
+                {
+                    ballspeedX = ballspeedX * 1.5;
+                }
+            }
 
             function drawEverything()
             {
-                canvasContext.fillStyle = 'black';
+                canvasContext.fillStyle = 'green';
                 canvasContext.fillRect( 0, 0, canvas.width, canvas.height );
-                canvasContext.fillStyle = 'red';
 
-                var side = 50;
+                canvasContext.fillStyle = 'yellow';
+                canvasContext.fillRect( ballx, bally, 25 , 25 );
 
-                canvasContext.fillRect( ( (canvas.width-side)/2 ),
-                                        ( (canvas.height-side)/2 ),
-                                        side,
-                                        side );
+                canvasContext.fillStyle = 'white';
+                canvasContext.fillRect( 0, 250, 15, 150);
+
+                canvasContext.fillstyle = 'white';
+                canvasContext.fillRect( canvas.width - 15, 250, 15, 150);
+
+//                canvasContext.fillstyle = 'white';
+//                canvasContext.fillRect( lineX, 0, 10, 20)
+
+
+                var dashInterval = dashLength + dashGap;
+
+                var hcenter = ( canvasContext.width-2 )/2;
+                var y=0;
+
+                for ( y=0; y<canvas.height; y+=dashInterval )
+                {
+                    canvasContext.beginPath();
+                    canvasContext.moveTo( hcenter, y );
+                    canvasContext.lineTo( hcenter, y+dashLength );
+                    canvasContext.strokeStyle = "black";
+                    canvasContext.lineWidth = 2;
+                    canvasContext.stroke();
+                }
             }
 
         </script>
